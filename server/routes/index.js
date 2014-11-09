@@ -1,4 +1,4 @@
-
+var validateToken  = require('./../controllers/auth').validateToken;
 /**
  * Set all routes for API on the app object using the Router object
  */
@@ -12,17 +12,12 @@ module.exports = function (app, router) {
      *
      * sets req.user to user object if token is valid
      */
-    router.use(function(req, res, next) {
-
-        // check token
-
-        // continue doing what we were doing and go to the route
-        next();
-    });
+    router.use(validateToken);
 
     router
         .route('/example')
         .get(function(req, res){
+            res.send('fdjvbnsdfjvnjsdfn');
         });
 
 
