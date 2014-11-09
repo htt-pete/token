@@ -4,6 +4,7 @@ var jwt = require('jwt-simple');
 
 var tokenConfig = require('./../../config').token;
 
+
 module.exports =  function (req, res, next) {
     console.log(req.headers.auth);
     if(req.headers.auth){
