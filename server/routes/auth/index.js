@@ -1,16 +1,16 @@
+'use strict';
+
+var authControllers = require('./../../controllers/auth');
+
 module.exports =  function(app) {
     // auth routes
     app
     .route('/auth/login')
-    .post(function(req,res){
-        res.send('hello world');
-    });
+    .post(authControllers.login);
 
     app
     .route('/auth/register')
-    .post(function(req, res){
-        res.send('boolean');
-    });
+    .post(authControllers.register);
 
     return app;
 };

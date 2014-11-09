@@ -1,3 +1,4 @@
+'use strict';
 /**
  * Facade class that contains methods for validating a token,
  * login and register

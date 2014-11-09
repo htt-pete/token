@@ -1,3 +1,5 @@
+'use strict';
+
 var validateToken  = require('./../controllers/auth').validateToken;
 /**
  * Set all routes for API on the app object using the Router object
@@ -17,7 +19,7 @@ module.exports = function (app, router) {
     router
         .route('/example')
         .get(function(req, res){
-            res.send('fdjvbnsdfjvnjsdfn');
+            res.send(req.user);
         });
 
 
