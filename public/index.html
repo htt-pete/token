@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <title>Angular</title>
     <!-- CSS goes here -->
-    <link rel="stylesheet" href="build/main.css">
+    <link rel="stylesheet" href="build/css/main.css">
 </head>
-<body ng-app="coApp">
+<body>
 
     <!-- NAVIGATION -->
     <nav class="navbar navbar-inverse" role="navigation">
@@ -19,17 +19,10 @@
         <h1>MEAN Stack ready</h1>
     </div>
 
-    <div class="container" ng-controller="TestCtrl as testCtrl">
-        <alert ng-repeat="alert in testCtrl.alerts" type="{{alert.type}}" close="testCtrl.closeAlert($index)">{{alert.msg}}</alert>
-        <p>dcs</p>
-    </div>
-
 <!-- dependencies goes here -->
 <script src="dev/lib/angular/angular.js"></script>
 <script src="dev/lib/angular-route/angular-route.js"></script>
 <script src="dev/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-
-
 
 <!-- app js goes here -->
 <script src="dev/js/app.js"></script>
