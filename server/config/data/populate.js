@@ -9,15 +9,16 @@ function populate () {
     console.log('---------------------');
     console.log('inserting data' + '\n');
     User.remove({}, function(err){
-        _.each(users, function(user){
+        mongoose.connection.close();
+    });
+
+    _.each(users, function (user) {
             console.log(user);
             var u = new User(user);
             u.save(user, function(err, u){
                 // mongoose.connection.clos();
             });
-        });
     });
-    mongoose.connection.close();
 }
 
 populate();

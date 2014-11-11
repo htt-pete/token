@@ -15,7 +15,7 @@ var users = [
 },
 {
     "_id" : "54614efab963945cfccfd6a8",
-    "email" : "example@coapp.com",
+    "email" : "admin@coapp.com",
     "password" : "$2a$10$1GrvH/nY1ijZydQr2I4Z9.sz4t1aZlNlD2/Z6RkSwa9J8fpyWTp7W",
     "created" : "2014-11-10T23:49:14.963Z",
     "__v" : 0
