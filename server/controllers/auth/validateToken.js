@@ -6,7 +6,6 @@ var tokenConfig = require('./../../config').token;
 
 
 module.exports =  function (req, res, next) {
-    console.log(req.headers.auth);
     if(req.headers.auth){
         var token = req.headers.auth;
 
@@ -18,7 +17,6 @@ module.exports =  function (req, res, next) {
             return next();
 
         } catch (err) {
-            console.log(err);
             return res.send(401, 'not a valid token');
         }
 
