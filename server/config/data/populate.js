@@ -16,7 +16,7 @@ function populate () {
             console.log(user);
             var u = new User(user);
             u.save(user, function(err, u){
-                // mongoose.connection.clos();
+
             });
     });
 }
