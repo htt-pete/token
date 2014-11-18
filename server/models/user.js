@@ -31,11 +31,11 @@ User.pre('save', function (next) {
 
     // generate salt
     bcrypt.genSalt(GEN_SALT, function(err, salt){
-        if(err) next(err);
+        if(err) return next(err);
 
         // set users password to hash of password
         bcrypt.hash(_user.password, salt, function(err, hash){
-            if(err) next(err);
+            if(err) return next(err);
 
             _user.password = hash;
             next();

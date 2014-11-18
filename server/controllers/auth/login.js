@@ -10,19 +10,19 @@ function login (req, res, next) {
 
         // if user null return err
         if(!user){
-            res.status(401).send('Cant find a user by  ' + req.body.email);
+            return res.status(401).send('Cant find a user by  ' + req.body.email);
         }
 
         user.comparePasswords(req.body.password, function(err, isMatch){
 
             // if passwords dont match return err
             if(!isMatch) {
-                res.status(401).send('Invalid email and/or password');
+                return res.status(401).send('Invalid email and/or password');
             }
 
             var token = tokenHelper.createToken(user);
 
-            res.json({
+            return res.json({
                 token: token,
                 user: user
             });

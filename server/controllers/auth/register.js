@@ -17,7 +17,7 @@ module.exports =  function login (req, res, next) {
                     return res.send(err);
                 }
 
-                res.send(200);
+                return res.send(200);
             });
         }
     });
