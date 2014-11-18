@@ -3,14 +3,14 @@
  */ -->
 <div class="col-md-4 col-md-offset-1">
     <h1>Register</h1>
-    <form name="registerForm"  role="form">
+    <form name="registerForm"  role="form" ng-submit="registerCtrl.register(registerCtrl.user)">
         <div class="form-group">
             <label for="exampleInputEmail1">Username or Email</label>
-            <input  type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+            <input ng-model="registerCtrl.user.email"  type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
         </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
-            <input  type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <input ng-model="registerCtrl.user.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
           </div>
           <button type="submit" class="btn btn-sm btn-default">Sign in</button>
             <!-- {{regCtrl.user.email}} -->

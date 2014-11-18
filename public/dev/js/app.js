@@ -6,13 +6,15 @@ app.config(function($routeProvider, $httpProvider){
 $routeProvider
 	.when('/login', {
 		templateUrl: 'dev/js/views/login.html',
-		//controller: LoginCtrl,
+		controller: 'loginController',
+		controllerAs: 'loginCtrl',
 		access:{
 			requiredLogin: false
 		}
 	}).when('/register',{
 		templateUrl: 'dev/js/views/register.html',
-		//controller: registerCtrl,
+		controller: 'registerController',
+		controllerAs: 'registerCtrl',
 		access:{
 			requiredLogin: false
 		}
