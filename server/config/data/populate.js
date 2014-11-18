@@ -7,8 +7,10 @@ var users = require('./seeds/users');
 function populate () {
 
     mongoose.connect(config.db, function(err) {
-    if (err) console.log(err);
-    });
+    if (err) {console.log(err);}
+
+    else{
+
     console.log('---------------------');
     console.log('inserting data' + '\n');
     User.remove({}, function(err){
@@ -22,6 +24,9 @@ function populate () {
 
             });
     });
+}
+    });
+    
 }
 
 populate();
