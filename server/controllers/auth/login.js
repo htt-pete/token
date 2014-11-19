@@ -28,6 +28,8 @@ function login (req, res, next) {
 
             var token = tokenHelper.createToken(user);
 
+            console.log(user);
+
             return res.json({
                 token: token,
                 user: user._id
