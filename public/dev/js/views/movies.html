@@ -9,6 +9,7 @@
         <tr ng-repeat="movie in movieCtrl.movies">
             <td>{{movie.title}}</td>
             <td>{{movie.rating}}</td>
+            <td><img ng-src="{{movie.img}}"></td>
         </tr>
     </tbody>
 </table>
