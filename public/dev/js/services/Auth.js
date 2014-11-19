@@ -1,10 +1,8 @@
 (function(){
 
-var coapp = angular.module('coapp');
+	var coapp = angular.module('coapp');
 
-
-
-	coapp.factory('AuthFactory', function($window, $location, $http, $q){
+	coapp.factory('AuthFactory', function($window, $location, $http, $q, AuthenticationFactory){
 
 			var auth = {};
 
@@ -38,16 +36,35 @@ var coapp = angular.module('coapp');
 					return defer.promise;
 				};
 
+				auth.logout = function() {
+					if (AuthenticationFactory.isLogged) {
+						AuthenticationFactory.isLogged = false;
+
+						delete $window.localStorage.user;
+						delete $window.localStorage.user;
+
+						delete AuthenticationFactory.user;
+					}
+				};
 
 			return auth;
 
 	});
 
 	//////////////////
-	coapp.factory('AuthService', function(){
+	coapp.factory('AuthenticationFactory', function($window){
 
-		var auth = {
-			isLogged: false
+		var auth = {};
+
+		auth.isLogged = false;
+
+		auth.check = function () {
+			if($window.localStorage.token && $window.localStorage.user) {
+				this.isLogged = true;
+			} else {
+				this.isLogged = false;
+				delete this.user;
+			}
 		}
 
 		return auth;
@@ -55,7 +72,7 @@ var coapp = angular.module('coapp');
 
 
 
-	coapp.factory('TokenInterceptor', function($window, $location, $q, AuthService, $timeout){
+	coapp.factory('TokenInterceptor', function($window, $location, $q){
 
 		var tokenIntercept = {};
 
@@ -67,28 +84,9 @@ var coapp = angular.module('coapp');
 			return config;
 		};
 
-		tokenIntercept.requestError = function (rejection) {
-			return $q.reject(rejection);
-		};
-
-		tokenIntercept.reponse = function(response){
-			if (response != null && response.status == 200 && $window.localStorage.token && !AuthService.isLogged) {
-				AuthService.isLogged = true;
-			}
-
+		tokenIntercept.response = function(response){
 			return response || $q.when(response);
-		};
-
-		tokenIntercept.reponse = function(rejection){
-			if(rejection !== null && rejection.status === 401 && (AuthService.isLogged || $window.localStorage.token)) {
-				delete $window.localStorage.token;
-				AuthService.isLogged = false;
-
-				$location.path('#/login');
-			}
-
-			return $q.reject(rejection);
-		};
+		}
 
 		return tokenIntercept;
 

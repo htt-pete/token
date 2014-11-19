@@ -3,19 +3,19 @@ var app = angular.module('coapp', ['ngRoute', 'ui.bootstrap']);
 
 app.config(function($routeProvider, $httpProvider){
 
-$routeProvider
+    $routeProvider
 	.when('/login', {
 		templateUrl: 'dev/js/views/login.html',
-		controller: 'loginController',
-		controllerAs: 'loginCtrl',
+		controller: 'AuthController',
+		controllerAs: 'authCtrl',
 		access:{
 			requiredLogin: false
 		}
 	})
 	.when('/register',{
 		templateUrl: 'dev/js/views/register.html',
-		controller: 'registerController',
-		controllerAs: 'registerCtrl',
+		controller: 'AuthController',
+		controllerAs: 'authCtrl',
 		access:{
 			requiredLogin: false
 		}
@@ -27,44 +27,36 @@ $routeProvider
 		access: {
 			requiredLogin: true
 		}
-	});
+	}).otherwise({
+      redirectTo: '/login'
+    });;
 
 	$httpProvider.interceptors.push('TokenInterceptor');
 
 });//config
 
+app.run(function($rootScope, $window, $location, AuthenticationFactory){
+    AuthenticationFactory.check();
 
-app.run(function($rootScope, $location, $window, AuthService){
-	$rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute){
+    console.log(AuthenticationFactory);
 
-		console.log('can get here');
+    $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute){
+        if((nextRoute.access && nextRoute.access.requiredLogin) && !AuthenticationFactory.isLogged) {
+            $location.path('/login');
+        } else {
+            if(!AuthenticationFactory.user) AuthenticationFactory.user = $window.localStorage.user;
+        }
+    });
 
-		$location.path('/login');
+    $rootScope.$on('$routeChangeSuccess', function (event, nextRoute, currentRoute){
+        $rootScope.showMenu = AuthenticationFactory.isLogged;
+        console.log('here');
+        if (AuthenticationFactory.isLogged && $location.path() === '/login'){
+            $location.path('/');
+            console.log('in here');
+        }
+    });
 
-		if(nextRoute != null && nextRoute.access != null && nextRoute.access.requiredLogin && !AuthService.isLogged && $window.localStorage.token){
-			console.log('but not here');
-			$location.path('/login');
-
-		};
-	})
 
 });
-
-app.run(function($rootScope, $window, $location, AuthService) {
-  // when the page refreshes, check if the user is already logged in
-
-  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
-    if ((nextRoute.access && nextRoute.access.requiredLogin) && !AuthService.isLogged) {
-      $location.path("/login");
-	    }
-  });
-
-  // $rootScope.$on('$routeChangeSuccess', function(event, nextRoute, currentRoute) {
-  //   $rootScope.showMenu = AuthService.isLogged;
-  //   $rootScope.role = AuthService.userRole;
-  //   // if the user is already logged in, take him to the home page
-  //   if (AuthService.isLogged == true && $location.path() == '/login') {
-  //     $location.path('/');
-  //   }
-  });
 

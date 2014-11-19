@@ -8,24 +8,7 @@
 </head>
 <body>
 
-    <!-- NAVIGATION -->
-    <nav class="navbar navbar-inverse" role="navigation">
-        <div class="navbar-header">
-            <a class="navbar-brand">MEAN stack</a>
-        </div>
-    </nav>
-
-    <div class="jumbotron text-center">
-        <h1>MEAN Stack ready</h1>
-    </div>
-
-    <!-- <div class="container">
-        <a href="#/login" class="btn btn-default">Login</a>
-        <a href="#/register" class="btn btn-default">Register</a>
-    </div> -->
-
-
-
+    <div ng-include="'dev/js/views/header.html'"></div>
     <div class="container" ng-view></div>
 
 <!-- dependencies goes here -->
@@ -36,11 +19,9 @@
 <!-- app js goes here -->
 <script src="dev/js/app.js"></script>
 <script src="dev/js/services/Auth.js"></script>
-<script src="dev/js/controllers/loginController.js"></script>
-<script src="dev/js/controllers/registerController.js"></script>
+<script src="dev/js/controllers/AuthController.js"></script>
+<script src="dev/js/controllers/HeaderController.js"></script>
 <script src="dev/js/controllers/movieController.js"></script>
-<script src="dev/js/controllers/btnController.js"></script>
-
 
 <!-- <script src="build/app.min.js"></script> -->
 

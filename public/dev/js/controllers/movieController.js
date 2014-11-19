@@ -6,15 +6,13 @@
     coapp.controller('movieController', function($http){
         var _this = this;
 
-        _this.movies = [];
+        _this.movies = [{title:'Avatar', rating: 5}];
 
-        $http.get('/api/movies')
-            .success(function(data){
-                _this.movies = data;
-            })
-            .error(function(err){
-                console.log(err);
-            });
+        // $http.get('/api/movies')
+        //     .success(function(data){
+        //         _this.movies = data;
+        //     });
+
 
     });
 
