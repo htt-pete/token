@@ -4,6 +4,12 @@ var tokenHelper = require('./../../helpers/token.js');
 
 console.log(tokenHelper);
 
+/**
+ * Find user by email and if found return a token
+ *
+ * @url :: /auth/login
+ * @return {JSON} :: contains token and user
+ */
 function login (req, res, next) {
     // find user by email
     User.findOne({email: req.body.email}, function(err, user){

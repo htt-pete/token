@@ -24,7 +24,7 @@ module.exports =  function(app) {
     fileUpload.checkExists(__dirname + config.upload.tmpDir);
 
     // set path of HTML,CSS,JS
-    app.use(express.static(__dirname + config.public));
+    app.use(express.static(__dirname + config.publicDir));
 
     // setup logging
     app.use(morgan('dev'));

@@ -1,5 +1,5 @@
 module.exports =  {
-    public: './../../public',
+    publicDir: './../../public',
     db:'mongodb://localhost:27017/token',
     token: {
         secret: 'this.is.sparta',
