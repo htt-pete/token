@@ -36,12 +36,12 @@
 					return defer.promise;
 				};
 
-				auth.logout = function() {
+				auth.logout = function($location) {
 					if (AuthenticationFactory.isLogged) {
 						AuthenticationFactory.isLogged = false;
 
 						delete $window.localStorage.user;
-						delete $window.localStorage.user;
+						delete $window.localStorage.token;
 
 						delete AuthenticationFactory.user;
 					}
@@ -70,8 +70,6 @@
 		return auth;
 	});
 
-
-
 	coapp.factory('TokenInterceptor', function($window, $location, $q){
 
 		var tokenIntercept = {};
@@ -82,6 +80,12 @@
 				config.headers.auth = "Bearer " + $window.localStorage.token;
 			}
 			return config;
+		};
+
+		tokenIntercept.responseError = function (rejection) {
+			console.log(rejection);
+
+			return $q.reject(rejection);
 		};
 
 		tokenIntercept.response = function(response){

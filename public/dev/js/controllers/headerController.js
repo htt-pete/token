@@ -5,12 +5,12 @@
 
     app.controller('HeaderCtrl', headerController);
 
-    function headerController (AuthFactory) {
+    function headerController (AuthFactory, $location) {
         var _this = this;
 
         _this.logout = function () {
-            alert('asdfas');
             AuthFactory.logout();
+            $location.path('/login');
         }
     }
 

@@ -3,6 +3,25 @@ var app = angular.module('coapp', ['ngRoute', 'ui.bootstrap']);
 
 app.config(function($routeProvider, $httpProvider){
 
+    function checkLoggedIn($q, $log, authService) {
+                var deferred = $q.defer();
+
+                if (!authService.isAuthenticated()) {
+                    $log.log('authentication required. redirect to login');
+                    deferred.reject({ needsAuthentication: true });
+                } else {
+                    deferred.resolve();
+                }
+
+                return deferred.promise;
+            }
+
+    $routeProvider.whenAuthenticated = function (path, route) {
+        route.resolve = route.resolve || {};
+        angular.extend(route.resolve, { isLoggedIn: ['$q', '$log', 'authService', checkLoggedIn] });
+        return $routeProvider.when(path, route);
+    }
+
     $routeProvider
 	.when('/login', {
 		templateUrl: 'dev/js/views/login.html',
@@ -38,11 +57,13 @@ app.config(function($routeProvider, $httpProvider){
 app.run(function($rootScope, $window, $location, AuthenticationFactory){
     AuthenticationFactory.check();
 
-    console.log(AuthenticationFactory);
-
     $rootScope.$on('$routeChangeStart', function (event, nextRoute, currentRoute){
+        console.log('user is ',AuthenticationFactory.isLogged);
         if((nextRoute.access && nextRoute.access.requiredLogin) && !AuthenticationFactory.isLogged) {
+            console.log('here');
+             event.preventDefault();        //
             $location.path('/login');
+             if (!$rootScope.$$phase) $rootScope.$apply();
         } else {
             if(!AuthenticationFactory.user) AuthenticationFactory.user = $window.localStorage.user;
         }
@@ -50,13 +71,12 @@ app.run(function($rootScope, $window, $location, AuthenticationFactory){
 
     $rootScope.$on('$routeChangeSuccess', function (event, nextRoute, currentRoute){
         $rootScope.showMenu = AuthenticationFactory.isLogged;
-        console.log('here');
         if (AuthenticationFactory.isLogged && $location.path() === '/login'){
             $location.path('/');
-            console.log('in here');
         }
     });
 
 
 });
+
 
