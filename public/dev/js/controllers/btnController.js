@@ -7,14 +7,16 @@
     function buttonsController (AuthService, $window, $location) {
         var _this = this;
 
-        _this.loggedIn = AuthService.isLogged;
-console.log(_this);
-        _this.logOut = function(){
+        _this.logout = function(){
+        console.log($window.localStorage.token);
+
+
             if(AuthService.isLogged && $window.localStorage.token){
-                _this.loggedIn = false;
                 AuthService.isLogged = false;
                 delete $window.localStorage.token;
-                $location.path('/')
+                console.log($window.localStorage.token);
+                $location.path('login');
+
             }
         };
     }

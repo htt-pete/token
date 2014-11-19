@@ -35,7 +35,7 @@
 				AuthFactory
 					.register(user)
 					.then(function(data){
-						$location.path('/login');
+						$location.path('#/login');
 
 					}, function(error){
 						_this.user = {};

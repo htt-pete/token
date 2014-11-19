@@ -27,7 +27,7 @@
     				AuthService.isLogged = true;
     				$window.localStorage.token = data.token;
     				$window.localStorage.user = data.user;
-    				$location.path('/');
+    				$location.path('/movies');
 
 
     			}, function(error){
@@ -39,6 +39,7 @@
     				_this.alerts.push(err);
 
     			});
+
     	};
 
 

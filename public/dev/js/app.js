@@ -27,14 +27,6 @@ $routeProvider
 		access: {
 			requiredLogin: true
 		}
-	})
-	.when('/',{
-		templateUrl: 'dev/js/views/loginRegBtn.html',
-		controller: 'buttonsController',
-		controllerAs: 'btnCtrl',
-		access: {
-			requiredLogin: false
-		}
 	});
 
 	$httpProvider.interceptors.push('TokenInterceptor');
@@ -43,11 +35,36 @@ $routeProvider
 
 
 app.run(function($rootScope, $location, $window, AuthService){
-	$rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute){
+	$rootScope.$on('$stateChangeStart', function(event, nextRoute, currentRoute){
+
+		console.log('can get here');
+
+		$location.path('/login');
+
 		if(nextRoute != null && nextRoute.access != null && nextRoute.access.requiredLogin && !AuthService.isLogged && $window.localStorage.token){
+			console.log('but not here');
 			$location.path('/login');
+
 		};
 	})
 
 });
+
+app.run(function($rootScope, $window, $location, AuthService) {
+  // when the page refreshes, check if the user is already logged in
+
+  $rootScope.$on("$routeChangeStart", function(event, nextRoute, currentRoute) {
+    if ((nextRoute.access && nextRoute.access.requiredLogin) && !AuthService.isLogged) {
+      $location.path("/login");
+	    }
+  });
+
+  // $rootScope.$on('$routeChangeSuccess', function(event, nextRoute, currentRoute) {
+  //   $rootScope.showMenu = AuthService.isLogged;
+  //   $rootScope.role = AuthService.userRole;
+  //   // if the user is already logged in, take him to the home page
+  //   if (AuthService.isLogged == true && $location.path() == '/login') {
+  //     $location.path('/');
+  //   }
+  });
 

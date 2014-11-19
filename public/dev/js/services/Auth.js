@@ -49,12 +49,13 @@ var coapp = angular.module('coapp');
 		var auth = {
 			isLogged: false
 		}
+
 		return auth;
 	});
 
 
 
-	coapp.factory('TokenInterceptor', function($window, $location, $q, AuthService){
+	coapp.factory('TokenInterceptor', function($window, $location, $q, AuthService, $timeout){
 
 		var tokenIntercept = {};
 
@@ -66,8 +67,27 @@ var coapp = angular.module('coapp');
 			return config;
 		};
 
+		tokenIntercept.requestError = function (rejection) {
+			return $q.reject(rejection);
+		};
+
 		tokenIntercept.reponse = function(response){
+			if (response != null && response.status == 200 && $window.localStorage.token && !AuthService.isLogged) {
+				AuthService.isLogged = true;
+			}
+
 			return response || $q.when(response);
+		};
+
+		tokenIntercept.reponse = function(rejection){
+			if(rejection !== null && rejection.status === 401 && (AuthService.isLogged || $window.localStorage.token)) {
+				delete $window.localStorage.token;
+				AuthService.isLogged = false;
+
+				$location.path('#/login');
+			}
+
+			return $q.reject(rejection);
 		};
 
 		return tokenIntercept;
