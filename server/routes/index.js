@@ -25,8 +25,6 @@ module.exports = function (app, router) {
      */
     fs.readdirSync(__dirname + '/').forEach(function(file){
         if ( file !== 'index.js') {
-            var name = file.replace('.js', '');
-            console.log(name);
             require('./' + file)(app, router);
         }
     });
