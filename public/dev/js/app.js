@@ -29,6 +29,17 @@ $routeProvider
 		}
 	});
 
+	$httpProvider.interceptors.push('TokenInterceptor');
 
 });//config
+
+
+app.run(function($rootScope, $location, $window, AuthService){
+	$rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute){
+		if(nextRoute != null && nextRoute.access != null && nextRoute.access.requiredLogin && !AuthService.isLogged && $window.localStorage.token){
+			$location.path('/login');
+		};
+	})
+
+});
 
