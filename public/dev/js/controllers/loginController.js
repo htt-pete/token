@@ -27,7 +27,7 @@
     				AuthService.isLogged = true;
     				$window.localStorage.token = data.token;
     				$window.localStorage.user = data.user;
-    				$location.path('/movies');
+    				$location.path('/');
 
 
     			}, function(error){
@@ -41,13 +41,7 @@
     			});
     	};
 
-    	_this.logOut = function(){
-    		if(AuthService.isLogged && $window.localStorage.token){
-    			AuthService.isLogged = false;
-    			delete $window.localStorage.token;
-    			$location.path('/')
-    		}
-    	};
+
     }
 
 	loginController.$inject = ['$window', '$location', 'AuthFactory', 'AuthService'];
