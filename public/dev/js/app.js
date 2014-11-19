@@ -11,12 +11,21 @@ $routeProvider
 		access:{
 			requiredLogin: false
 		}
-	}).when('/register',{
+	})
+	.when('/register',{
 		templateUrl: 'dev/js/views/register.html',
 		controller: 'registerController',
 		controllerAs: 'registerCtrl',
 		access:{
 			requiredLogin: false
+		}
+	})
+	.when('/movies', {
+		templateUrl: 'dev/js/views/movies.html',
+		controller: 'movieController',
+		controllerAs: 'movieCtrl',
+		acces: {
+			requiredLogin: true
 		}
 	});
 
