@@ -24,8 +24,7 @@ var paths = {
             './public/dev/lib/angular/angular.js',
             './public/dev/lib/angular-route/anugular-route.js',
             './public/dev/lib/angular-bootstrap/ui-bootstrap-tpls.js',
-            './public/dev/js/**/*.js',
-            '!public/dev/js/views/**/*.js'
+            './public/dev/js/**/*.js'
         ]
     },
 }

@@ -1,9 +1,9 @@
 (function(){
-angular.module('coapp').controller('registerController', regController);
+	angular.module('coapp').controller('registerController', regController);
 
-function regController($window, $location, AuthFactory){
+	function regController($window, $location, AuthFactory){
 
-	var _this = this;
+		var _this = this;
 
 	this.register = function(user){
 		AuthFactory
@@ -14,11 +14,10 @@ function regController($window, $location, AuthFactory){
 			}, function(error){
 				console.log(error);
 			});
-	};
+		}; // register
 	
-}
+	}
 
-regController.$inject = ['$window', '$location', 'AuthFactory'];
-
+	regController.$inject = ['$window', '$location', 'AuthFactory'];
 
 })();

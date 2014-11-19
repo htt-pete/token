@@ -24,7 +24,7 @@ function login (req, res, next) {
 
             return res.json({
                 token: token,
-                user: user
+                user: user._id
             });
         });
     });

@@ -1,6 +1,6 @@
 'use strict';
 
-var authControllers = require('./../../controllers/auth');
+var authControllers = require('./../controllers/auth');
 
 module.exports =  function(app) {
     // auth routes
