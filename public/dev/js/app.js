@@ -24,8 +24,16 @@ $routeProvider
 		templateUrl: 'dev/js/views/movies.html',
 		controller: 'movieController',
 		controllerAs: 'movieCtrl',
-		acces: {
+		access: {
 			requiredLogin: true
+		}
+	})
+	.when('/',{
+		templateUrl: 'dev/js/views/loginRegBtn.html',
+		controller: 'buttonsController',
+		controllerAs: 'btnCtrl',
+		access: {
+			requiredLogin: false
 		}
 	});
 
