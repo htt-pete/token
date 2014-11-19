@@ -6,7 +6,6 @@ function regController($window, $location, AuthFactory){
 	var _this = this;
 
 	this.register = function(user){
-console.log("register");
 		AuthFactory
 			.register(user)
 			.then(function(data){
