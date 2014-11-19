@@ -7,6 +7,7 @@
 
 		//set up
 		_this.alerts = [];
+
 		/**
 		 * removes bootstrap alert
 		 * @param  {[type]} index
@@ -15,21 +16,38 @@
 		_this.closeAlert = function(index){
 			_this.alerts.splice(index, 1);
 		}
-		this.register = function(user){
-			_this.alerts = [];
-			AuthFactory
-				.register(user)
-				.then(function(data){
-					$location.path('/login');
 
-				}, function(error){
-					_this.user = {};
-					var err = {
-						type: 'danger',
-						msg: error
-					}
-					_this.alerts.push(err);
-				});
+		_this.addAlert = function (alert) {
+			_this.alerts.push(alert);
+		}
+
+		_this.register = function(user){
+			_this.alerts = [];
+
+			if(!user || !user.email || !user.password) {
+				_this.user = {};
+				var err = {
+					type: 'danger',
+					msg: 'invalid data'
+				}
+				_this.addAlert(err);
+			} else {
+				AuthFactory
+					.register(user)
+					.then(function(data){
+						$location.path('/login');
+
+					}, function(error){
+						_this.user = {};
+						var err = {
+							type: 'danger',
+							msg: error
+						}
+
+						_this.addAlert(err);
+					});
+			}
+
 			}; // register
 
 	}

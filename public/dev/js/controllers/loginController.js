@@ -9,6 +9,7 @@
 
     	//set up
     	_this.alerts = [];
+
     	/**
     	 * removes bootstrap alert
     	 * @param  {[type]} index
