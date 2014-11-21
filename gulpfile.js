@@ -10,6 +10,9 @@ var path = require('path');
 var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
+var browserSync = require('browser-sync');
+var filter      = require('gulp-filter');
+
 
 var paths = {
     server: {
@@ -44,7 +47,9 @@ gulp.task('sass', function () {
     gulp.src(paths.client.sass)
         .pipe(sass())
         .pipe(concat('main.css'))
-        .pipe(gulp.dest('./public/build'));
+        .pipe(gulp.dest('./public/build'))
+        .pipe(filter('**/*.css')) // Filtering stream to only css files
+        .pipe(browserSync.reload({stream:true}));;
 });
 
 /**
@@ -62,31 +67,32 @@ gulp.task('js-build', function() {
  * lint javascript source files
  */
 function lint(lintSrc) {
-    return gulp.src(lintSrc)
-                .pipe(jshint('./.jshintrc'))
-                .pipe(notify({
-                    onLast: true,
-                    message: function (file) {
-                        if (file.jshint.success) {
-                          // Don't show something if success
-                          return false;
-                        }
+    return
+        gulp.src(lintSrc)
+            .pipe(jshint('./.jshintrc'))
+            .pipe(notify({
+                onLast: true,
+                message: function (file) {
+                    if (file.jshint.success) {
+                      // Don't show something if success
+                      return false;
+                    }
 
-                        // create a string that contains error details
-                        var errors = file.jshint.results.map(function (data) {
-                          if (data.error) {
-                            return "line " + data.error.line + ' : ' +  data.error.reason;
-                          }
-                        }).join("\n"); // join error messages with a new line
+                    // create a string that contains error details
+                    var errors = file.jshint.results.map(function (data) {
+                      if (data.error) {
+                        return "line " + data.error.line + ' : ' +  data.error.reason;
+                      }
+                    }).join("\n"); // join error messages with a new line
 
-                        return errors;
-                    },
-                    title: function (file) {
-                        return 'File : ' + file.relative;
-                    },
-                    sound: "Submarine",
-                    icon: path.join(__dirname, "gulp.png")
-                }));
+                    return errors;
+                },
+                title: function (file) {
+                    return 'File : ' + file.relative;
+                },
+                sound: "Submarine",
+                icon: path.join(__dirname, "gulp.png")
+            }));
 }
 
 /**
@@ -100,7 +106,7 @@ gulp.task('server-dev', function() {
     })
     .on('change', ['server-lint'])
     .on('restart', function () {
-      console.log('restarted!')
+      console.log('restarted!');
     })
 });
 
@@ -108,7 +114,20 @@ gulp.task('server-dev', function() {
  * Gulp task for running dev tools for client
  * lint JS, compile JS, compile SASS etc
  */
-gulp.task('client-dev', function() {
+gulp.task('client-dev', ['browser-sync'],  function() {
   gulp.watch([paths.client.js], ['clientLint']);
   gulp.watch([paths.client.sass], ['sass']);
+});
+
+/**
+ * run browser sync to inject css after sass complete
+ *
+ */
+gulp.task('browser-sync', function() {
+    browserSync.init(null, {
+        proxy: "http://localhost:3000",
+        files: ["./public/build/main.css"],
+        browser: "google chrome",
+        port: 7000,
+    });
 });

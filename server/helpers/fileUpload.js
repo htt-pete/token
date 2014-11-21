@@ -1,18 +1,19 @@
 var fs = require('fs');
 var mkdirp = require('mkdirp');
+var path = require('path');
 /**
  * Check if upload directory exists
- * @param  {String} dir :: directory to check for
  *
+ * @param  {String} dir :: directory to check for
  */
 function checkExists (dir) {
-    fs.exists(dir, function (exists) {
+    fs.exists(path.resolve(dir), function (exists) {
         if (!exists) {
-            mkdirp (dir, function (err) {
+            mkdirp (path.resolve(dir), function (err) {
                 if (err) {
                     console.error(err);
                 } else {
-                    console.log(dir + ' directory was created');
+                    console.log(path.resolve(dir) + ' directory was created');
                 }
             });
         }
