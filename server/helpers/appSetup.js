@@ -20,9 +20,7 @@ var config = require('./../config');
 module.exports =  function(app) {
 
     // create uploads directory if needed
-    fileUpload.checkExists(__dirname + config.upload.uploadsDir);
-    fileUpload.checkExists(__dirname + config.upload.tmpDir);
-
+    fileUpload.checkExists([__dirname + config.upload.uploadsDir, __dirname + config.upload.tmpDir]);
     // set path of HTML,CSS,JS
     app.use(express.static(__dirname + config.publicDir));
 

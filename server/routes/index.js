@@ -13,12 +13,12 @@ module.exports = function (app, router) {
      *
      * sets req.user to user object if token is valid
      */
-    router.use(validateToken);
+    // router.use(validateToken);
 
     /**
      * dynamically load all the routes
      *
-     * this will only happen upon booting up app
+     * this will only happen when booting up
      *
      * @param  {String} file :: file to require
      * @require each file in current directory

@@ -7,6 +7,8 @@ module.exports =  {
     },
     upload: {
         uploadsDir: './../../public/media/uploads',
-        tmpDir: './../../public/media/tmp'
+        tmpDir: './../../public/media/tmp',
+        size: 2000000, // 2mb
+        types: ['.jpg', '.jpeg', '.png']
     }
 };

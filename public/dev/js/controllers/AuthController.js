@@ -2,6 +2,9 @@
 	angular.module('coapp')
 	.controller('AuthController', regController);
 
+	/**
+	 * @ngInject
+	 */
 	function regController($window, $location, AuthFactory, AuthenticationFactory){
 
 		var _this = this;
@@ -80,7 +83,5 @@
 		};
 
 	}
-
-	regController.$inject = ['$window', '$location', 'AuthFactory', 'AuthenticationFactory'];
 
 })();
