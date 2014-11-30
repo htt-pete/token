@@ -4,6 +4,8 @@ var path = require('path');
 var _ = require('underscore');
 
 function exists (dir) {
+    'use strict';
+
     fs.exists(path.resolve(dir), function (exists) {
         if (!exists) {
             mkdirp.sync(path.resolve(dir), function (err) {
@@ -23,10 +25,11 @@ function exists (dir) {
  * @param  {String} dir :: directory to check for
  */
 function checkExists (dir) {
+    'use strict';
     if(_.isArray(dir)) {
         _.each(dir, function (d){
             exists(d);
-        })
+        });
     } else {
         exists (dir);
     }
@@ -34,4 +37,4 @@ function checkExists (dir) {
 
 module.exports = {
     checkExists: checkExists
-}
+};

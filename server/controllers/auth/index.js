@@ -7,4 +7,4 @@ module.exports = {
     validateToken: require('./validateToken'),
     login: require('./login'),
     register: require('./register')
-}
+};

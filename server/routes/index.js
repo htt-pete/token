@@ -1,5 +1,3 @@
-'use strict';
-
 var validateToken  = require('./../controllers/auth').validateToken;
 var fs = require('fs');
 
@@ -7,6 +5,8 @@ var fs = require('fs');
  * Set all routes for API on the app object using the Router object
  */
 module.exports = function (app, router) {
+
+    'use strict';
 
     /**
      * Middle ware to check for token to authenticate user
@@ -36,4 +36,4 @@ module.exports = function (app, router) {
     app.use('/api', router);
 
     return app;
-}
+};

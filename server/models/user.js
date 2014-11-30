@@ -25,17 +25,24 @@ var User = new Schema({
 });
 
 User.pre('save', function (next) {
+    'use strict';
     var _user = this;
 
-    if(!_user.isModified('password')) next();
+    if(!_user.isModified('password'))  {
+       return next();
+    }
 
     // generate salt
     bcrypt.genSalt(GEN_SALT, function(err, salt){
-        if(err) return next(err);
+        if(err) {
+            return next(err);
+        }
 
         // set users password to hash of password
         bcrypt.hash(_user.password, salt, function(err, hash){
-            if(err) return next(err);
+            if(err) {
+                return next(err);
+            }
 
             _user.password = hash;
             next();
@@ -44,11 +51,14 @@ User.pre('save', function (next) {
 });
 
 User.methods.comparePasswords = function (password, cb) {
+    'use strict';
     bcrypt.compare(password, this.password, function(err, isMatch){
-        if(err) return cb(err);
+        if(err) {
+            return cb(err);
+        }
 
         cb(null, isMatch);
     });
-}
+};
 
 module.exports =  mongoose.model('User', User);

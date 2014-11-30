@@ -1,9 +1,6 @@
 var User = require('./../../models/user.js');
 
 var tokenHelper = require('./../../helpers/token.js');
-
-console.log(tokenHelper);
-
 /**
  * Find user by email and if found return a token
  *
@@ -11,6 +8,8 @@ console.log(tokenHelper);
  * @return {JSON} :: contains token and user
  */
 function login (req, res, next) {
+
+    'use strict';
     // find user by email
     User.findOne({email: req.body.email}, function(err, user){
 
@@ -36,6 +35,6 @@ function login (req, res, next) {
             });
         });
     });
-};
+}
 
 module.exports =  login;
